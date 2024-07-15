@@ -1,5 +1,5 @@
 ﻿using Application.Features.Users.Commands.Create;
-using Application.Features.Users.Commands.Delete;
+//using Application.Features.Users.Commands.Delete;
 using Application.Features.Users.Commands.Update;
 using Application.Features.Users.Queries.GetById;
 using Application.Features.Users.Queries.GetList;
@@ -33,13 +33,13 @@ namespace FileUploadSystem.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var command = new DeleteUserCommand { Id = id };
-            await _mediator.Send(command);
-            return NoContent();
-        }
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> Delete(int id)
+        //{
+        //    var command = new DeleteUserCommand { Id = id };
+        //    await _mediator.Send(command);
+        //    return NoContent();
+        //}
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)

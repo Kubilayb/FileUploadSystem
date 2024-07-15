@@ -1,35 +1,19 @@
 ﻿using Core.Paging;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Core.DataAccess
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<TEntity> where TEntity : class
     {
-        T? Get(Expression<Func<T, bool>> predicate, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null);
-        IPaginate<T> GetList(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
-            int index = 0,
-            int size = 10,
-            bool enableTracking = true
-            );
-        void Add(T entity);
-        void Update(T entity);
-        void Delete(T entity);
-        void SoftDelete(T entity);
-
-        Task<T?> GetAsync(Expression<Func<T, bool>> predicate, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null);
-        Task<IPaginate<T>> GetListAsync(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
-            int index = 0,
-            int size = 10,
-            bool enableTracking = true
-            );
-        Task AddAsync(T entity);
-        Task UpdateAsync(T entity);
-        Task DeleteAsync(T entity);
-        Task SoftDeleteAsync(T entity);
+        IQueryable<TEntity> Query();
+        void Add(TEntity entity);
+        void Delete(TEntity entity);
+        void SoftDelete(TEntity entity);
+        TEntity? Get(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null);
+        IPaginate<TEntity> GetList(Expression<Func<TEntity, bool>>? predicate = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, int index = 0, int size = 10, bool enableTracking = true);
+        void Update(TEntity entity);
     }
 }

@@ -1,37 +1,34 @@
 ﻿using Application.Repositories;
 using AutoMapper;
-using Core.Hashing;
-using FileUploadSystem.Domain.Entities;
+using Core.Entities;
 using MediatR;
 
-namespace Application.Features.Users.Commands.Create
+namespace Application.Features.OperationClaims.Commands.Create
 {
-    public class CreateUserCommand : IRequest<CreateUserDto>
+    public class CreateOperationClaimCommand : IRequest<CreateOperationClaimResponse>
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-    }
+        public string Name { get; set; }
 
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, CreateUserDto>
-    {
-        private readonly IUserRepository _userRepository;
-        private readonly IMapper _mapper;
-
-        public CreateUserCommandHandler(IUserRepository userRepository, IMapper mapper)
+        public class CreateOperationClaimCommandHandler : IRequestHandler<CreateOperationClaimCommand, CreateOperationClaimResponse>
         {
-            _userRepository = userRepository;
-            _mapper = mapper;
-        }
+            private readonly IOperationClaimRepository _operationClaimRepository;
+            private readonly IMapper _mapper;
 
-        public async Task<CreateUserDto> Handle(CreateUserCommand request, CancellationToken cancellationToken)
-        {
-            var user = _mapper.Map<User>(request);
-            user.Password = HashingHelper.HashPassword(request.Password); // Password hashing logic
-            var createdUser = await _userRepository.AddAsync(user);
-            var userDto = _mapper.Map<CreateUserDto>(createdUser);
-            return userDto;
+            public CreateOperationClaimCommandHandler(IOperationClaimRepository operationClaimRepository, IMapper mapper)
+            {
+                _operationClaimRepository = operationClaimRepository;
+                _mapper = mapper;
+            }
+
+            public async Task<CreateOperationClaimResponse> Handle(CreateOperationClaimCommand request, CancellationToken cancellationToken)
+            {
+                OperationClaim operationClaim = _mapper.Map<OperationClaim>(request);
+
+                await _operationClaimRepository.AddAsync(operationClaim);
+
+                CreateOperationClaimResponse response = _mapper.Map<CreateOperationClaimResponse>(operationClaim);
+                return response;
+            }
         }
     }
 }

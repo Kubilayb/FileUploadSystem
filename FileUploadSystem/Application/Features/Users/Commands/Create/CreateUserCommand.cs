@@ -2,10 +2,9 @@
 using AutoMapper;
 using Application.Dtos;
 using Application.Repositories;
-using Core.Domain.Entities;
-using Application.Features.Users.Rules;
 using Core.Hashing;
 using FileUploadSystem.Domain.Entities;
+using Application.Features.Users.Rules;
 
 namespace Application.Features.Users.Commands.Create
 {

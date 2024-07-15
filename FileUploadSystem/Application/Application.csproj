@@ -6,17 +6,6 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
-	<ItemGroup>
-	  <Compile Remove="Features\Departments\**" />
-	  <Compile Remove="Features\Feedbacks\**" />
-	  <Compile Remove="Features\Notifications\**" />
-	  <EmbeddedResource Remove="Features\Departments\**" />
-	  <EmbeddedResource Remove="Features\Feedbacks\**" />
-	  <EmbeddedResource Remove="Features\Notifications\**" />
-	  <None Remove="Features\Departments\**" />
-	  <None Remove="Features\Feedbacks\**" />
-	  <None Remove="Features\Notifications\**" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Core\Core.csproj" />

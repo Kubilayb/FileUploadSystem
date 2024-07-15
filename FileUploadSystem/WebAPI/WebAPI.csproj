@@ -19,11 +19,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Persistence\Persistence.csproj" />
+		<Folder Include="logs\" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="logs\" />
+	  <ProjectReference Include="..\Application\Application.csproj" />
+	  <ProjectReference Include="..\Persistence\Persistence.csproj" />
+	  <ProjectReference Include="..\Pesristence\Pesristence.csproj" />
 	</ItemGroup>
 
 </Project>

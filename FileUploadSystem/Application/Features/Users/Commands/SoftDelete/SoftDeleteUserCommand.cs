@@ -1,14 +1,14 @@
 ﻿using Application.Repositories;
-using Domain.Entities;
+using FileUploadSystem.Domain.Entities;
 using MediatR;
 
 namespace Application.Features.Users.Commands.SoftDelete
 {
-    public class SoftDeleteSharedFileCommand : IRequest
+    public class SoftDeleteUserCommand : IRequest
     {
         public int Id { get; set; }
 
-        public class SoftDeleteUserCommandHandler : IRequestHandler<SoftDeleteSharedFileCommand>
+        public class SoftDeleteUserCommandHandler : IRequestHandler<SoftDeleteUserCommand>
         {
             private readonly IUserRepository _userRepository;
 
@@ -17,7 +17,7 @@ namespace Application.Features.Users.Commands.SoftDelete
                 _userRepository = userRepository;
             }
 
-            public async Task Handle(SoftDeleteSharedFileCommand request, CancellationToken cancellationToken)
+            public async Task Handle(SoftDeleteUserCommand request, CancellationToken cancellationToken)
             {
                 User? user = await _userRepository.GetAsync(i => i.Id == request.Id);
 

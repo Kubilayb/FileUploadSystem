@@ -1,25 +1,20 @@
 ﻿using Core.Paging;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Core.DataAccess
 {
-    public interface IAsyncRepository<T>
+    public interface IAsyncRepository<TEntity> where TEntity : class
     {
-        Task<T?> GetAsync(Expression<Func<T, bool>> predicate, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null);
-        Task<IPaginate<T>> GetListAsync(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
-            int index = 0,
-            int size = 10,
-            CancellationToken cancellationToken = default
-         );
-        Task AddAsync(T entity);
-        Task UpdateAsync(T entity);
-        Task DeleteAsync(T entity);
-        Task SoftDeleteAsync(T entity);
+        Task AddAsync(TEntity entity);
+        Task DeleteAsync(TEntity entity);
+        Task SoftDeleteAsync(TEntity entity);
+        Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null);
+        Task<IPaginate<TEntity>> GetListAsync(Expression<Func<TEntity, bool>>? predicate = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, int index = 0, int size = 10, CancellationToken cancellationToken = default);
+        Task UpdateAsync(TEntity entity);
     }
 }

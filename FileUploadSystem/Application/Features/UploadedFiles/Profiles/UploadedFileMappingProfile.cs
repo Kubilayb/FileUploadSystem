@@ -1,4 +1,7 @@
+using Application.Features.UploadedFiles.Commands.Create;
 using Application.Features.UploadedFiles.Commands.Update;
+using Application.Features.UploadedFiles.Queries.GetById;
+using Application.Features.UploadedFiles.Queries.GetList;
 using AutoMapper;
 using FileUploadSystem.Domain.Entities;
 

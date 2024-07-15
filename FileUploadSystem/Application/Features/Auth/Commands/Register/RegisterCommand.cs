@@ -1,7 +1,7 @@
 ﻿using Application.Repositories;
 using AutoMapper;
 using Core.Hashing;
-using Domain.Entities;
+using FileUploadSystem.Domain.Entities;
 using MediatR;
 
 namespace Application.Features.Auth.Commands.Register

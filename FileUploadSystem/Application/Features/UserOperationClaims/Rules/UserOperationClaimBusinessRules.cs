@@ -1,5 +1,4 @@
 ﻿using Application.Repositories;
-using Core.CrossCuttingConcerns.Exceptions;
 using Core.CrossCuttingConcerns.Exceptions.Types;
 using System.Threading.Tasks;
 
@@ -14,22 +13,10 @@ namespace Application.Features.UserOperationClaims.Rules
             _userOperationClaimRepository = userOperationClaimRepository;
         }
 
-        public async Task OperationClaimCannotBeDuplicatedWhenInserted(int userId, int operationClaimId)
+        public async Task OperationClaimCannotBeDuplicatedWhenUpdated(int userId, int operationClaimId)
         {
-            var existingUserOperationClaim = await _userOperationClaimRepository.GetAsync(uoc => uoc.UserId == userId && uoc.OperationClaimId == operationClaimId);
-            if (existingUserOperationClaim != null)
-            {
-                throw new BusinessException("Operation claim already exists for this user.");
-            }
+            var userOperationClaim = await _userOperationClaimRepository.GetAsync(u => u.UserId == userId && u.OperationClaimId == operationClaimId);
+            if (userOperationClaim != null) throw new BusinessException("This operation claim is already assigned to the user.");
         }
     }
-    public async Task OperationClaimCannotBeDuplicatedWhenUpdated(int id, int userId, int operationClaimId)
-    {
-        var existingUserOperationClaim = await _userOperationClaimRepository.GetAsync(uoc => uoc.UserId == userId && uoc.OperationClaimId == operationClaimId && uoc.Id != id);
-        if (existingUserOperationClaim != null)
-        {
-            throw new BusinessException("Operation claim already exists for this user.");
-        }
-    }
-
 }

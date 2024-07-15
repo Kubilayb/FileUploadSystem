@@ -4,6 +4,8 @@ namespace Core.Entities
 {
     public class UserOperationClaim : Entity<int>
     {
+        public int UserId;
+
         public int BaseUserId { get; set; }
         public int OperationClaimId { get; set; }
 

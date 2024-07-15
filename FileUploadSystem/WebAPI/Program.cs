@@ -1,4 +1,3 @@
-using Persistence;
 using Application;
 using Core;
 using Core.CrossCuttingConcerns.Exceptions.Extensions;
@@ -6,6 +5,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Core.JWT;
 using Microsoft.OpenApi.Models;
+using FileUploadSystem.Persistence;
+
 
 var builder = WebApplication.CreateBuilder(args);
 

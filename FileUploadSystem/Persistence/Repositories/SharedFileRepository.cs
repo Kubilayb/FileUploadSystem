@@ -1,11 +1,14 @@
 ﻿using Application.Repositories;
 using Core.DataAccess;
-using Core.Entities;
+using FileUploadSystem.Domain.Entities;
 using FileUploadSystem.Persistence.Contexts;
 
-public class SharedFileRepository : EfRepositoryBase<UserOperationClaim, FileUploadDbContext>, IUserOperationClaimRepository
+namespace Persistence.Repositories
 {
-    public SharedFileRepository(FileUploadDbContext context) : base(context)
+    public class SharedFileRepository : EfRepositoryBase<SharedFile, FileUploadDbContext>, ISharedFileRepository
     {
+        public SharedFileRepository(FileUploadDbContext context) : base(context)
+        {
+        }
     }
 }

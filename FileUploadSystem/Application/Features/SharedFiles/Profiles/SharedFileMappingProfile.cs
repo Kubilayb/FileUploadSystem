@@ -1,3 +1,7 @@
+using Application.Features.SharedFiles.Commands.Create;
+using Application.Features.SharedFiles.Commands.Update;
+using Application.Features.SharedFiles.Queries.GetById;
+using Application.Features.SharedFiles.Queries.GetList;
 using Application.Features.UploadedFiles.Queries.GetList;
 using AutoMapper;
 using FileUploadSystem.Domain.Entities;

@@ -1,4 +1,5 @@
 ﻿using Core.DataAccess;
+using Core.Entities;
 using FileUploadSystem.Domain.Entities;
 
 namespace Application.Repositories

@@ -2,10 +2,9 @@
 using AutoMapper;
 using Application.Dtos;
 using Application.Repositories;
-using Core.Domain.Entities;
-using Application.Features.Users.Rules;
 using Core.CrossCuttingConcerns.Exceptions.Types;
 using Core.Hashing;
+using Application.Features.Users.Rules;
 
 namespace Application.Features.Users.Commands.Update
 {

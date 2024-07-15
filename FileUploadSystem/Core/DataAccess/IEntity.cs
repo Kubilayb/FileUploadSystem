@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Core.DataAccess
 {
-    public interface IEntity
+    public interface IEntity<T>
     {
+        T Id { get; set; }
     }
 }
