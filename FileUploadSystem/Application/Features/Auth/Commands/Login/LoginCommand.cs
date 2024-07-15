@@ -4,7 +4,7 @@ using Core.Entities;
 using Core.Hashing;
 using Core.JWT;
 using Core.Paging;
-using Domain.Entities;
+using FileUploadSystem.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

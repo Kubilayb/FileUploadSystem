@@ -1,6 +1,6 @@
 ﻿using Application.Features.Auth.Commands.Register;
 using AutoMapper;
-using Domain.Entities;
+using FileUploadSystem.Domain.Entities;
 
 namespace Application.Features.Auth.Profiles
 {
