@@ -13,7 +13,8 @@ namespace FileUploadSystem.Persistence
         public static void AddPersistenceServices(this IServiceCollection services, string connectionString)
         {
             // Add DbContext with connection string
-            services.AddDbContext<FileUploadDbContext>();
+            services.AddDbContext<FileUploadDbContext>(options =>
+                options.UseSqlServer(connectionString));
 
             // Add scoped services
             services.AddScoped<IOperationClaimRepository, OperationClaimRepository>();
@@ -21,8 +22,6 @@ namespace FileUploadSystem.Persistence
             services.AddScoped<IUploadedFileRepository, UploadedFileRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ISharedFileRepository, SharedFileRepository>();
-            return services;
-
         }
     }
 }
