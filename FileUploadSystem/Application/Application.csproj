@@ -18,5 +18,10 @@
 		<PackageReference Include="MediatR" Version="12.3.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<Folder Include="Features\Departments\Rules\" />
+		<Folder Include="Features\Feedbacks\Queries\" />
+		<Folder Include="Features\Notifications\Queries\" />
+	</ItemGroup>
 
 </Project>

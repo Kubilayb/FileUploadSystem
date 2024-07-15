@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Users.Constants
 {
-    public static class UsersOperationClaims
+    public static class SharedFilesOperationClaims
     {
         public const string Admin = "users.admin";
 

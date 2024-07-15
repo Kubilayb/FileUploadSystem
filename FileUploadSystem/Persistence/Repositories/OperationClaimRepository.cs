@@ -1,14 +1,14 @@
 ﻿using Application.Repositories;
 using Core.DataAccess;
 using Core.Entities;
-using Persistence.Contexts;
+using FileUploadSystem.Persistence.Contexts;
 
 namespace Persistence.Repositories
 {
-    public class OperationClaimRepository : EfRepositoryBase<OperationClaim, HospitalAppointDbContext>,
+    public class OperationClaimRepository : EfRepositoryBase<OperationClaim, FileUploadDbContext>,
         IOperationClaimRepository
     {
-        public OperationClaimRepository(HospitalAppointDbContext context) : base(context)
+        public OperationClaimRepository(FileUploadDbContext context) : base(context)
         {
         }
     }

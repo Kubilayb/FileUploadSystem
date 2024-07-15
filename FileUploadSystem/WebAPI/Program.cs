@@ -52,11 +52,12 @@ builder.Services.AddSwaggerGen(opt =>
 
 TokenOptions? tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
-builder.Services.AddPersistenceServices();
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddPersistenceServices(connectionString);
 builder.Services.AddApplicationServices();
 builder.Services.AddCoreServices(tokenOptions);
 builder.Services.AddHttpContextAccessor();
-
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

@@ -54,7 +54,7 @@ namespace Core.DataAccess
             return data.FirstOrDefault(predicate);
         }
 
-        public IPaginate<TEntity> GetList(Expression<Func<TEntity, bool>>? predicate = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,    int index = 0,
+        public IPaginate<TEntity> GetList(Expression<Func<TEntity, bool>>? predicate = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, int index = 0,
             int size = 10,
             bool enableTracking = true
         )

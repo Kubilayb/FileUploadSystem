@@ -4,11 +4,11 @@ using MediatR;
 
 namespace Application.Features.Users.Commands.SoftDelete
 {
-    public class SoftDeleteUserCommand : IRequest
+    public class SoftDeleteSharedFileCommand : IRequest
     {
         public int Id { get; set; }
 
-        public class SoftDeleteUserCommandHandler : IRequestHandler<SoftDeleteUserCommand>
+        public class SoftDeleteUserCommandHandler : IRequestHandler<SoftDeleteSharedFileCommand>
         {
             private readonly IUserRepository _userRepository;
 
@@ -17,7 +17,7 @@ namespace Application.Features.Users.Commands.SoftDelete
                 _userRepository = userRepository;
             }
 
-            public async Task Handle(SoftDeleteUserCommand request, CancellationToken cancellationToken)
+            public async Task Handle(SoftDeleteSharedFileCommand request, CancellationToken cancellationToken)
             {
                 User? user = await _userRepository.GetAsync(i => i.Id == request.Id);
 

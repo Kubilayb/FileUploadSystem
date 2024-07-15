@@ -7,16 +7,11 @@ using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Serilog;
-using Application.Services.DoctorService;
 using Application.Services.AuthService;
-using Application.Services.PatientService;
 using Application.Services.UserService;
-using Application.Services.AppointmentService;
-using Application.Services.DoctorAvailabilityService;
 using Application.Repositories;
 using Application.Services.SharedFileService;
 using Application.Services.UploadedFileService;
-
 
 namespace Application
 {

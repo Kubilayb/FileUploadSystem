@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Application.Features.Users.Commands.Update
 {
-    public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
+    public class UpdateSharedFileCommandValidator : AbstractValidator<UpdateSharedFileCommand>
     {
-		public UpdateUserCommandValidator()
+		public UpdateSharedFileCommandValidator()
 		{
 			RuleFor(i => i.PhoneNumber)
 			.Matches(@"^\+90\d{10}$").NotEmpty()

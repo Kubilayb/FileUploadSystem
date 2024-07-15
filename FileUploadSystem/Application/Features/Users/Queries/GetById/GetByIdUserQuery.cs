@@ -1,36 +1,34 @@
-﻿using Application.Repositories;
+﻿using MediatR;
 using AutoMapper;
-using Domain.Entities;
-using MediatR;
+using Application.Dtos;
+using Application.Repositories;
+using Core.CrossCuttingConcerns.Exceptions.Types;
 
 namespace Application.Features.Users.Queries.GetById
 {
-    public class GetByIdUserQuery : IRequest<GetByIdUserResponse>
+    public class GetByIdUserQuery : IRequest<UserDto>
     {
         public int Id { get; set; }
+    }
 
-        public class GetByIdUserQueryHandler : IRequestHandler<GetByIdUserQuery, GetByIdUserResponse>
+    public class GetByIdUserQueryHandler : IRequestHandler<GetByIdUserQuery, UserDto>
+    {
+        private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
+
+        public GetByIdUserQueryHandler(IUserRepository userRepository, IMapper mapper)
         {
-            private readonly IUserRepository _userRepository;
-            private readonly IMapper _mapper;
+            _userRepository = userRepository;
+            _mapper = mapper;
+        }
 
-            public GetByIdUserQueryHandler(IUserRepository userRepository, IMapper mapper)
-            {
-                _userRepository = userRepository;
-                _mapper = mapper;
-            }
+        public async Task<UserDto> Handle(GetByIdUserQuery request, CancellationToken cancellationToken)
+        {
+            var user = await _userRepository.GetByIdAsync(request.Id);
+            if (user == null) throw new NotFoundException("User not found");
 
-            public async Task<GetByIdUserResponse> Handle(GetByIdUserQuery request, CancellationToken cancellationToken)
-            {
-                User? user = await _userRepository.GetAsync(i  => i.Id == request.Id);
-                if (user == null)
-                {
-                    throw new ArgumentException("No such user found");
-                }
-
-                GetByIdUserResponse response = _mapper.Map<GetByIdUserResponse>(user);
-                return response;
-            }
+            var userDto = _mapper.Map<UserDto>(user);
+            return userDto;
         }
     }
 }

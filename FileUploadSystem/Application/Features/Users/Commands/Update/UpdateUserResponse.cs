@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Users.Commands.Update
 {
-    public class UpdateUserResponse
+    public class UpdateSharedFileResponse
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

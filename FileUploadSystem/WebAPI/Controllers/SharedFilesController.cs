@@ -1,27 +1,60 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Features.SharedFiles.Commands.Create;
+using Application.Features.SharedFiles.Commands.Delete;
+using Application.Features.SharedFiles.Commands.Update;
+using Application.Features.SharedFiles.Queries.GetById;
+using Application.Features.SharedFiles.Queries.GetList;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
-[Route("api/[controller]")]
-[ApiController]
-public class SharedFilesController : ControllerBase
+namespace FileUploadSystem.Controllers
 {
-    private readonly ISharedFileRepository _fileShareService;
-
-    public SharedFilesController(ISharedFileRepository fileShareService)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class SharedFilesController : ControllerBase
     {
-        _fileShareService = fileShareService;
-    }
+        private readonly IMediator _mediator;
 
-    [HttpPost("share")]
-    public async Task<IActionResult> ShareFile(int fileId, int userId)
-    {
-        var result = await _fileShareService.ShareFileAsync(fileId, userId);
-        return Ok(result);
-    }
+        public SharedFilesController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
 
-    [HttpGet]
-    public async Task<IActionResult> GetFileShares()
-    {
-        var result = await _fileShareService.GetFileSharesAsync();
-        return Ok(result);
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CreateSharedFileCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Created("", result);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateSharedFileCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var command = new DeleteSharedFileCommand { Id = id };
+            await _mediator.Send(command);
+            return NoContent();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var query = new GetByIdSharedFileQuery { Id = id };
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetList()
+        {
+            var query = new GetListSharedFileQuery();
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
     }
 }

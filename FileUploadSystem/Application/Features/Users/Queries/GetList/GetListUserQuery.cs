@@ -1,41 +1,30 @@
-﻿using Application.Repositories;
+﻿using MediatR;
 using AutoMapper;
-using Core.Application.Pipelines.Authorization;
-using Core.Paging;
-using Core.Requests;
-using Core.Responses;
-using Domain.Entities;
-using MediatR;
+using Application.Dtos;
+using Application.Repositories;
 
 namespace Application.Features.Users.Queries.GetList
 {
-    public class GetListUserQuery : IRequest<GetListResponse<GetListUserResponse>>, ISecuredRequest
+    public class GetListUserQuery : IRequest<List<UserDto>>
     {
-        public PageRequest PageRequest { get; set; }
-        public string[] RequiredRoles => ["User.GetList"];
+    }
 
-        public class GetListQueryHandler : IRequestHandler<GetListUserQuery, GetListResponse<GetListUserResponse>>
+    public class GetListUserQueryHandler : IRequestHandler<GetListUserQuery, List<UserDto>>
+    {
+        private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
+
+        public GetListUserQueryHandler(IUserRepository userRepository, IMapper mapper)
         {
-            private readonly IUserRepository _userRepository;
-            private readonly IMapper _mapper;
+            _userRepository = userRepository;
+            _mapper = mapper;
+        }
 
-            public GetListQueryHandler(IUserRepository userRepository, IMapper mapper)
-            {
-                _userRepository = userRepository;
-                _mapper = mapper;
-            }
-
-            public async Task<GetListResponse<GetListUserResponse>> Handle(GetListUserQuery request, CancellationToken cancellationToken)
-            {
-                IPaginate<User> users = await _userRepository.GetListAsync(
-                index: request.PageRequest.Page,
-                size: request.PageRequest.PageSize
-                );
-
-                var response = _mapper.Map<GetListResponse<GetListUserResponse>>(users);
-                
-                return response;
-            }
+        public async Task<List<UserDto>> Handle(GetListUserQuery request, CancellationToken cancellationToken)
+        {
+            var users = await _userRepository.GetListAsync();
+            var userDtos = _mapper.Map<List<UserDto>>(users);
+            return userDtos;
         }
     }
 }

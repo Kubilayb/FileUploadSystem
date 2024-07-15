@@ -1,27 +1,60 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Features.Users.Commands.Create;
+using Application.Features.Users.Commands.Delete;
+using Application.Features.Users.Commands.Update;
+using Application.Features.Users.Queries.GetById;
+using Application.Features.Users.Queries.GetList;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
-[Route("api/[controller]")]
-[ApiController]
-public class SharedFilesController : ControllerBase
+namespace FileUploadSystem.Controllers
 {
-    private readonly ISharedFileService _sharedFileService;
-
-    public SharedFilesController(ISharedFileService sharedFileService)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UsersController : ControllerBase
     {
-        _sharedFileService = sharedFileService;
-    }
+        private readonly IMediator _mediator;
 
-    [HttpPost("share")]
-    public async Task<IActionResult> ShareFile(int fileId, int userId)
-    {
-        var result = await _sharedFileService.ShareFileAsync(fileId, userId);
-        return Ok(result);
-    }
+        public UsersController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
 
-    [HttpGet]
-    public async Task<IActionResult> GetSharedFiles()
-    {
-        var result = await _sharedFileService.GetSharedFilesAsync();
-        return Ok(result);
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CreateUserCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Created("", result);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateUserCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var command = new DeleteUserCommand { Id = id };
+            await _mediator.Send(command);
+            return NoContent();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var query = new GetByIdUserQuery { Id = id };
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetList()
+        {
+            var query = new GetListUserQuery();
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
     }
 }

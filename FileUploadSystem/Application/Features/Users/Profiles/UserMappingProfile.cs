@@ -10,9 +10,9 @@ using Domain.Enums;
 
 namespace Application.Features.Users.Profiles
 {
-    public class UserMappingProfile : Profile
+    public class SharedFileMappingProfile : Profile
     {
-        public UserMappingProfile()
+        public SharedFileMappingProfile()
         {
             CreateMap<User, CreateUploadedFileCommand>()
                 .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender.ToString()))
@@ -24,13 +24,13 @@ namespace Application.Features.Users.Profiles
                 .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender.ToString()))
                 .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.City.ToString()))
                 .ReverseMap();
-            CreateMap<User, UpdateUserCommand>()
+            CreateMap<User, UpdateSharedFileCommand>()
                .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender.ToString()))
                .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.City.ToString()))
                .ReverseMap()
                .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => Enum.Parse<Gender>(src.Gender, true)))
                 .ForMember(dest => dest.City, opt => opt.MapFrom(src => Enum.Parse<City>(src.City, true)));
-            CreateMap<User, UpdateUserResponse>()
+            CreateMap<User, UpdateSharedFileResponse>()
                .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender.ToString()))
                .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.City.ToString()))
                .ReverseMap();
@@ -40,8 +40,8 @@ namespace Application.Features.Users.Profiles
                 .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.City.ToString()))
                 .ReverseMap();
             CreateMap<IPaginate<User>, GetListResponse<GetListUserResponse>>().ReverseMap();
-            CreateMap<User, GetByIdUserQuery>().ReverseMap();
-            CreateMap<User, GetByIdUserResponse>()
+            CreateMap<User, GetByIdSharedFileQuery>().ReverseMap();
+            CreateMap<User, GetByIdSharedFileResponse>()
                 .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender.ToString()))
                 .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.City.ToString()))
                 .ReverseMap();

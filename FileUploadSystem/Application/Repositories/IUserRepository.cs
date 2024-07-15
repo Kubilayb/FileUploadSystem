@@ -1,5 +1,5 @@
 ﻿using Core.DataAccess;
-using Domain.Entities;
+using FileUploadSystem.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,64 +1,44 @@
-﻿using Application.Repositories;
+﻿using MediatR;
 using AutoMapper;
-using Core.Application.Pipelines.Authorization;
-using Core.Application.Pipelines.Logging;
+using Application.Dtos;
+using Application.Repositories;
+using Core.Domain.Entities;
+using Application.Features.Users.Rules;
 using Core.Hashing;
-using Domain.Entities;
-using MediatR;
-using static Application.Features.Users.Constants.UsersOperationClaims;
+using FileUploadSystem.Domain.Entities;
 
 namespace Application.Features.Users.Commands.Create
 {
-    public class CreateUploadedFileCommand : IRequest<CreateUploadedFileResponse>, ILoggableRequest
+    public class CreateUserCommand : IRequest<CreateUserDto>
     {
-        public string[] RequiredRoles => new[] { Admin, Write, Add };
-
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public string Gender { get; set; }
-        public DateTime BirthDate { get; set; }
-        public string PhoneNumber { get; set; }
-        public string City { get; set; }
-        public string Address { get; set; }
-        public string PhotoUrl { get; set; }
+    }
 
-        public class CreateUserCommandHandler : IRequestHandler<CreateUploadedFileCommand, CreateUploadedFileResponse>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, CreateUserDto>
+    {
+        private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
+        private readonly UserBusinessRules _userBusinessRules;
+
+        public CreateUserCommandHandler(IUserRepository userRepository, IMapper mapper, UserBusinessRules userBusinessRules)
         {
-            private readonly IUserRepository _userRepository;
-            private readonly IMapper _mapper;
-            private readonly IPatientRepository _petientRepository; // todo refactor
+            _userRepository = userRepository;
+            _mapper = mapper;
+            _userBusinessRules = userBusinessRules;
+        }
 
-            public CreateUserCommandHandler(IUserRepository userRepository, IMapper mapper, IPatientRepository petientRepository)
-            {
-                _userRepository = userRepository;
-                _mapper = mapper;
-                _petientRepository = petientRepository;
-            }
+        public async Task<CreateUserDto> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        {
+            await _userBusinessRules.EmailCannotBeDuplicatedWhenInserted(request.Email);
 
-            public async Task<CreateUploadedFileResponse> Handle(CreateUploadedFileCommand request, CancellationToken cancellationToken)
-            {
-                User user = _mapper.Map<User>(request);
-                Patient patient = _mapper.Map<Patient>(request);
-
-                byte[] passwordHash, passwordSalt;
-
-                HashingHelper.CreatePasswordHash(request.Password, out passwordHash, out passwordSalt);
-
-                user.PasswordSalt = passwordSalt;
-                user.PasswordHash = passwordHash;
-                user.UserType = "patient"; // todo refactor
-
-                await _userRepository.AddAsync(user);
-
-                patient.UserId = user.Id;
-                await _petientRepository.AddAsync(patient);
-
-                CreateUploadedFileResponse response = _mapper.Map<CreateUploadedFileResponse>(user);
-                return response;
-            }
+            var user = _mapper.Map<User>(request);
+            user.Password = HashingHelper.HashPassword(request.Password); // Password hashing logic
+            var createdUser = await _userRepository.AddAsync(user);
+            var userDto = _mapper.Map<CreateUserDto>(createdUser);
+            return userDto;
         }
     }
 }
-

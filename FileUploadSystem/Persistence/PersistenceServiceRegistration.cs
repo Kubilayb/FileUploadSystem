@@ -7,23 +7,25 @@ using Persistence.Repositories;
 using Application.Services.SharedFileService;
 using Application.Services.UploadedFileService;
 
-
 namespace FileUploadSystem.Persistence
 {
     public static class PersistenceServiceRegistration
     {
-        public static void AddPersistenceServices(this IServiceCollection services)
+        public static void AddPersistenceServices(this IServiceCollection services, string connectionString)
         {
-            // Add DbContext
-            services.AddDbContext<FileUploadDbContext>();
+            // Add DbContext with connection string
+            services.AddDbContext<FileUploadDbContext>(options =>
+                options.UseSqlServer(connectionString));
+
             // Add scoped services
             services.AddScoped<IOperationClaimRepository, OperationClaimRepository>();
             services.AddScoped<IUserOperationClaimRepository, UserOperationClaimRepository>();
             services.AddScoped<IUploadedFileRepository, UploadedFileRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ISharedFileRepository, SharedFileRepository>();
-            return services;
 
+            services.AddScoped<ISharedFileService, SharedFileService>();
+            services.AddScoped<IUploadedFileService, UploadedFileService>();
         }
     }
 }
