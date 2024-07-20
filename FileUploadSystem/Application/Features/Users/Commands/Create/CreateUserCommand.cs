@@ -5,6 +5,7 @@ using Application.Repositories;
 using Core.Hashing;
 using FileUploadSystem.Domain.Entities;
 using Application.Features.Users.Rules;
+using Microsoft.AspNetCore.Identity;
 
 namespace Application.Features.Users.Commands.Create
 {
@@ -33,10 +34,18 @@ namespace Application.Features.Users.Commands.Create
         {
             await _userBusinessRules.EmailCannotBeDuplicatedWhenInserted(request.Email);
 
-            var user = _mapper.Map<User>(request);
-            user.Password = HashingHelper.HashPassword(request.Password); // Password hashing logic
-            var createdUser = await _userRepository.AddAsync(user);
-            var userDto = _mapper.Map<CreateUserDto>(createdUser);
+
+            User user = _mapper.Map<User>(request);
+
+            byte[] passwordHash, passwordSalt; 
+
+            HashingHelper.CreatePasswordHash(request.Password,out passwordHash,out passwordSalt);
+
+            user.PasswordSalt = passwordSalt;
+            user.PasswordHash = passwordHash;
+
+            await _userRepository.AddAsync(user);
+            var userDto = _mapper.Map<CreateUserDto>(user);
             return userDto;
         }
     }

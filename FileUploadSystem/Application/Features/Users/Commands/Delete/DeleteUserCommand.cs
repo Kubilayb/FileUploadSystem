@@ -3,6 +3,7 @@ using Core.CrossCuttingConcerns.Exceptions.Types;
 using Application.Repositories;
 using System.Threading;
 using System.Threading.Tasks;
+using FileUploadSystem.Domain.Entities;
 
 namespace Application.Features.Users.Commands.Delete
 {
@@ -22,7 +23,7 @@ namespace Application.Features.Users.Commands.Delete
 
         public async Task<Unit> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetByIdAsync(request.Id);
+            User? user = await _userRepository.GetAsync(i=>i.Id==request.Id);
             if (user == null)
             {
                 throw new NotFoundException("User not found");

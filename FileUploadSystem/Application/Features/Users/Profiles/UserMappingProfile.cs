@@ -17,6 +17,8 @@ namespace Application.Features.Users.Profiles
             CreateMap<User, CreateUserDto>();
             CreateMap<User, UpdateUserDto>();
             CreateMap<User, UserDto>();
+            CreateMap<CreateUserCommand, CreateUserDto>().ReverseMap(); 
+            CreateMap<UpdateUserCommand, UpdateUserDto>().ReverseMap();
         }
     }
 }

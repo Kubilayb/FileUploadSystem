@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{37A0AB17-E9E6-46C6-9CCF-FB0B41226387}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{6985C8C5-F95E-495E-BAC9-EE3188FF12E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{6985C8C5-F95E-495E-BAC9-EE3188FF12E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pesristence", "Pesristence\Pesristence.csproj", "{2E1E9B75-891E-4119-8B10-01AF44D2A8D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pesristence", "Pesristence\Pesristence.csproj", "{2E1E9B75-891E-4119-8B10-01AF44D2A8D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

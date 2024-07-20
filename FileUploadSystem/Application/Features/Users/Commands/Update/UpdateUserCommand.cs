@@ -5,6 +5,7 @@ using Application.Repositories;
 using Core.CrossCuttingConcerns.Exceptions.Types;
 using Core.Hashing;
 using Application.Features.Users.Rules;
+using FileUploadSystem.Domain.Entities;
 
 namespace Application.Features.Users.Commands.Update
 {
@@ -32,16 +33,26 @@ namespace Application.Features.Users.Commands.Update
 
         public async Task<UpdateUserDto> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetByIdAsync(request.Id);
-            if (user == null) throw new NotFoundException("User not found");
+            var userControll = await _userRepository.GetAsync(i => i.Id == request.Id);
+            if (userControll == null) throw new NotFoundException("User not found");
 
             await _userBusinessRules.EmailCannotBeDuplicatedWhenUpdated(request.Email, request.Id);
 
-            _mapper.Map(request, user);
-            user.Password = HashingHelper.HashPassword(request.Password); // Password hashing logic
+            User user = _mapper.Map<User>(request);
+
+            byte[] passwordHash, passwordSalt;
+
+            HashingHelper.CreatePasswordHash(request.Password, out passwordHash, out passwordSalt);
+
+            user.PasswordSalt = passwordSalt;
+            user.PasswordHash = passwordHash;
+
             await _userRepository.UpdateAsync(user);
-            var userDto = _mapper.Map<UpdateUserDto>(user);
-            return userDto;
+
+            UpdateUserDto updateUserDto = _mapper.Map<UpdateUserDto>(user);
+
+            return updateUserDto;
         }
     }
+    
 }

@@ -12,6 +12,7 @@ using Application.Services.UserService;
 using Application.Repositories;
 using Application.Services.SharedFileService;
 using Application.Services.UploadedFileService;
+using Application.Features.Users.Rules;
 
 namespace Application
 {
@@ -51,6 +52,8 @@ namespace Application
             services.AddScoped<IUploadedFileService, UploadedFileManager>();
             services.AddScoped<IUserService, UserManager>();
             services.AddScoped<ISharedFileService, SharedFileManager>();
+
+            services.AddTransient<UserBusinessRules>(); // UserBusinessRules sınıfını ekleyin
 
             return services;
         }

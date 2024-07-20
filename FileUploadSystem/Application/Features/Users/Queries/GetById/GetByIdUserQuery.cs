@@ -24,7 +24,7 @@ namespace Application.Features.Users.Queries.GetById
 
         public async Task<UserDto> Handle(GetByIdUserQuery request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetByIdAsync(request.Id);
+            var user = await _userRepository.GetAsync(i => i.Id == request.Id);
             if (user == null) throw new NotFoundException("User not found");
 
             var userDto = _mapper.Map<UserDto>(user);

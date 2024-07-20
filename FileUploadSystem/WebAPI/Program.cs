@@ -7,7 +7,6 @@ using Core.JWT;
 using Microsoft.OpenApi.Models;
 using FileUploadSystem.Persistence;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -55,7 +54,7 @@ TokenOptions? tokenOptions = builder.Configuration.GetSection("TokenOptions").Ge
 
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddPersistenceServices(connectionString);
+builder.Services.AddPersistenceServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddCoreServices(tokenOptions);
 builder.Services.AddHttpContextAccessor();

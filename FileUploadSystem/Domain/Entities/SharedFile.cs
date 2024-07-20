@@ -3,10 +3,10 @@ using System;
 
 namespace FileUploadSystem.Domain.Entities
 {
-    public class SharedFile : Entity<Guid>
+    public class SharedFile : Entity<int>
     {
-        public Guid FileId { get; private set; }
-        public Guid UserId { get; private set; }
+        public int FileId { get; private set; }
+        public int UserId { get; private set; }
         public UploadedFile File { get; private set; }
         public User User { get; private set; }
 
@@ -14,7 +14,7 @@ namespace FileUploadSystem.Domain.Entities
         {
         }
 
-        public SharedFile(Guid id, Guid fileId, Guid userId) : base(id)
+        public SharedFile(int id, int fileId, int userId) : base(id)
         {
             FileId = fileId;
             UserId = userId;

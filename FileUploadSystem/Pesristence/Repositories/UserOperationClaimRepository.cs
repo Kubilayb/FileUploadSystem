@@ -1,5 +1,6 @@
 ﻿using Application.Repositories;
 using Core.DataAccess;
+using Core.Entities;
 using FileUploadSystem.Domain.Entities;
 using FileUploadSystem.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;

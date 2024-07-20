@@ -3,7 +3,7 @@ using System;
 
 namespace FileUploadSystem.Domain.Entities
 {
-    public class UploadedFile : Entity<Guid>
+    public class UploadedFile : Entity<int>
     {
         public string FileName { get; private set; }
         public string FilePath { get; private set; }
@@ -13,7 +13,7 @@ namespace FileUploadSystem.Domain.Entities
         {
         }
 
-        public UploadedFile(Guid id, string fileName, string filePath, DateTime uploadDate) : base(id)
+        public UploadedFile(int id, string fileName, string filePath, DateTime uploadDate) : base(id)
         {
             FileName = fileName;
             FilePath = filePath;
